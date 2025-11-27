@@ -16,42 +16,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- DIAGNÓSTICO E IMPORTAÇÃO ROBUSTA ---
-try:
-    # Adicionar diretório atual ao path
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    sys.path.insert(0, current_dir)
-    
-    from sqlalchemy import text
-    from database import PostgresDatabaseManager
-    from views.login import login_page
-    from views.dashboard import manager_page
+# Adicionar diretório atual ao path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
 
-except ImportError as e:
-    st.error("❌ ERRO CRÍTICO DE IMPORTAÇÃO")
-    st.warning(f"Detalhes do erro: {e}")
-    
-    st.markdown("### 🔍 Diagnóstico do Ambiente")
-    st.write(f"**Diretório Atual:** `{os.getcwd()}`")
-    st.write(f"**Caminho do Arquivo:** `{current_dir}`")
-    
-    st.markdown("#### 📂 Conteúdo do Diretório Atual:")
-    try:
-        files = os.listdir(current_dir)
-        st.code("\n".join(files))
-        
-        if 'views' in files:
-            st.success("✅ Pasta 'views' encontrada!")
-            st.markdown("#### 📂 Conteúdo de 'views':")
-            st.code("\n".join(os.listdir(os.path.join(current_dir, 'views'))))
-        else:
-            st.error("❌ A pasta 'views' NÃO foi encontrada neste diretório.")
-            st.info("💡 Solução: Verifique se a pasta 'views' foi enviada para o GitHub. Pastas vazias são ignoradas pelo Git.")
-            
-    except Exception as ex:
-        st.error(f"Erro ao listar arquivos: {ex}")
-        
-    st.stop()
+# Importações
+from sqlalchemy import text
+from database import PostgresDatabaseManager
+from login import login_page
+from dashboard import manager_page
 
 # --- CONFIGURAÇÃO PARA STREAMLIT.IO COM SECRETS ---
 try:
