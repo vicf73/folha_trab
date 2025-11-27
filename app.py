@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 import logging
+import sys
+import os
+
+# Adicionar o diretório atual ao path para garantir que imports funcionem
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from sqlalchemy import text
 from database import PostgresDatabaseManager
 from views.login import login_page
